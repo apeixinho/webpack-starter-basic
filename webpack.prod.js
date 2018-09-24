@@ -3,7 +3,6 @@ const path = require('path');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -28,7 +27,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(scss|css)$/,
+                test: /\.(scss|css|sass)$/,
                 use: ExtractTextPlugin.extract({
                     use: [
                         {
@@ -93,7 +92,7 @@ module.exports = {
             // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
             background: '#fff',
             // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
-            title: 'Webpack starter basic',
+            title: '{{projectName}}',
 
             // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
             icons: {
@@ -109,13 +108,7 @@ module.exports = {
                 windows: false
             }
         }),
-        new UglifyJSPlugin({
-            sourceMap: true,
-            output: {
-                comments: false
-            }
-        }),
-        new ExtractTextPlugin('styles.[contentHash].css', {
+        new ExtractTextPlugin('styles.[md5:contenthash:hex:20].css', {
             allChunks: true
         }),
         new OptimizeCssAssetsPlugin({
